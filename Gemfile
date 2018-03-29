@@ -32,6 +32,8 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem 'simple_enum', git: 'https://github.com/drobny/simple_enum', branch: 'fix/reloading-with-options'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
