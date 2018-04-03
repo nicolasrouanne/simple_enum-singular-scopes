@@ -33,6 +33,7 @@ group :doc do
 end
 
 gem 'simple_enum', git: 'https://github.com/drobny/simple_enum', branch: 'fix/reloading-with-options'
+gem 'seed-fu', '2.3.6'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
