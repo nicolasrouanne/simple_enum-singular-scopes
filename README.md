@@ -33,3 +33,27 @@ NoMethodError: undefined method `low` for #<Class:0x007f85b9050988>
 Season Load (0.6ms)  SELECT "seasons".* FROM "seasons" WHERE "seasons"."name_cd" = 0
  => #<ActiveRecord::Relation [#<Season id: 1, created_at: "2018-04-03 09:15:40", updated_at: "2018-04-03 09:15:40", name_cd: 0>]>
 ```
+
+## EDIT: Fixed! ✅
+The issue was solved by [@drobny](https://github.com/drobny); it was caused by `pluralize_scopes` [getting confused](https://github.com/lwe/simple_enum/issues/139#issuecomment-378235776) as an option.
+
+The solution is either to add options as an array, this maps to default arrays indices starting at 0
+```ruby
+as_enum :name, [:low, :medium, :high], pluralize_scopes: false
+
+# rails console
+> Season.low
+=> #<ActiveRecord::Relation [#<Season id: 3, created_at: "2018-04-03 09:15:40", updated_at: "2018-04-03 09:15:40", name_cd: 0>]>
+```
+
+Or to add options as a hash specifying the value to map to the enum
+```ruby
+# you can specify whichever integer you like
+as_enum :name, { low: 1, medium: 2, high: 3 }, pluralize_scopes: false
+
+
+# rails console
+# NOTE: difference is `name_cd` which is 1 instead of 0
+> Season.low
+=> #<ActiveRecord::Relation [#<Season id: 3, created_at: "2018-04-03 09:15:40", updated_at: "2018-04-03 09:15:40", name_cd: 1>]>
+```
